@@ -5,66 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Temperature and Humidity Visualization</title>
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-    <style>
-        #chart {
-            width: 100%;
-            height: 100vh;
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div id="chart"></div>
 
-    <script>
-        const temperatureData = [];
-        const humidityData = [];
-        const timestamps = [];
-
-        // Function to update the plot
-        function updatePlot() {
-            const trace1 = {
-                x: timestamps,
-                y: temperatureData,
-                mode: 'lines+markers',
-                name: 'Temperature',
-                type: 'scatter'
-            };
-
-            const trace2 = {
-                x: timestamps,
-                y: humidityData,
-                mode: 'lines+markers',
-                name: 'Humidity',
-                type: 'scatter'
-            };
-
-            const data = [trace1, trace2];
-
-            const layout = {
-                title: 'Real-Time Temperature and Humidity Data',
-                xaxis: {
-                    title: 'Timestamp'
-                },
-                yaxis: {
-                    title: 'Value',
-                    rangemode: 'tozero'
-                }
-            };
-
-            Plotly.newPlot('chart', data, layout);
-        }
-
-        // WebSocket connection
-        const socket = new WebSocket('ws://localhost:3000');
-
-        socket.onmessage = function(event) {
-            const message = JSON.parse(event.data);
-            timestamps.push(message.timestamp);
-            temperatureData.push(message.temperature);
-            humidityData.push(message.humidity);
-
-            updatePlot();
-        };
-    </script>
+    <!-- Link to external JavaScript file -->
+    <script src="script.js"></script>
 </body>
 </html>

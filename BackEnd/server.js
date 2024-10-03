@@ -2,41 +2,20 @@
 const express = require('express'); 
 const net = require('net');
 const WebSocket = require('ws');
-const { Sequelize, DataTypes } = require('sequelize');
+const { sequelize, DhtData, fetchData } = require('./db'); // Import from db.js
+const cors = require('cors');
 
-
-const sequelize = new Sequelize({
-  dialect: 'sqlite',
-  storage: './database.sqlite' 
-});
-
-// Define the DhtData model
-const DhtData = sequelize.define('DhtData', {
-  id: {
-    type: DataTypes.INTEGER,
-    primaryKey: true,
-    autoIncrement: true 
-  },
-  temperature: {
-    type: DataTypes.FLOAT, 
-    allowNull: false
-  },
-  humidity: {
-    type: DataTypes.FLOAT, 
-    allowNull: false
-  },
-  timestamp: {
-    type: DataTypes.DATE, 
-    allowNull: false,
-    defaultValue: DataTypes.NOW 
-  }
-});
-
-
-sequelize.sync();
-//create express application
+// Create Express application
 const app = express();
-const port = 3000;
+const port = 3030;
+
+// Enable CORS for API endpoints
+app.use(cors());
+
+// Start the Express server
+app.listen(port, () => {
+  console.log(`Express server listening on port ${port}`);
+});
 
 // TCP server
 const tcpServer = net.createServer((socket) => {
@@ -80,30 +59,27 @@ const tcpServer = net.createServer((socket) => {
   });
 });
 
-// websockect server creation for real-time updates
-const wss = new WebSocket.Server({ port: 3000 });
+// Start the TCP server on port 8080
+tcpServer.listen(8080, () => {
+  console.log('TCP server listening on port 8080.');
+});
+
+// WebSocket server creation for real-time updates
+const wss = new WebSocket.Server({ port: 8081 }); // Use a different port
 
 wss.on('connection', (ws) => {
   console.log('WebSocket client connected');
 });
 
-// Endpoint to get all Data
-app.get('/data', async (req, res) => {
+// Endpoint to fetch initial data
+app.get('/api/data', async (req, res) => {
   try {
-    const data = await DhtData.findAll();
+    const data = await fetchData(); // Call fetchData from db.js
+    console.log(data)
     res.json(data);
+    console.log(data)
   } catch (error) {
     console.error('Error fetching data:', error);
-    res.status(500).json({ error: 'Error fetching data' });
+    res.status(500).send('Internal Server Error');
   }
-});
-
-// Start the Express server
-app.listen(port, () => {
-  console.log(`Express server listening on port ${port}`);
-});
-
-// Start the TCP server on port 8080
-tcpServer.listen(8080, () => {
-  console.log('TCP server listening on port 8080.');
 });
