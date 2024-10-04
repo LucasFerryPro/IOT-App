@@ -9,7 +9,6 @@ async function initializeData() {
     }
     
     const data = await response.json(); // Get the JSON response
-    console.log(data); // Log the data to see its structure
 
     // Ensure that the data properties are being accessed correctly
     const { temperatureData: fetchedTemperatureData, humidityData: fetchedHumidityData, timestamps: fetchedTimestamps } = data;

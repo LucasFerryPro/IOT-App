@@ -22,6 +22,7 @@ const tcpServer = net.createServer((socket) => {
   console.log('Client connected.');
 
   socket.on('data', async (data) => {
+
     const message = data.toString().trim();
     console.log(`Received message: ${message}`);
 
@@ -57,6 +58,14 @@ const tcpServer = net.createServer((socket) => {
   socket.on('error', (err) => {
     console.error('Socket error:', err.message);
   });
+
+  socket.on('close', () => {
+    console.log('Client disconnected.');
+  });
+  
+  socket.on('end', () => {
+    console.log('Client ended connection.');
+  });
 });
 
 // Start the TCP server on port 8080
@@ -75,9 +84,7 @@ wss.on('connection', (ws) => {
 app.get('/api/data', async (req, res) => {
   try {
     const data = await fetchData(); // Call fetchData from db.js
-    console.log(data)
     res.json(data);
-    console.log(data)
   } catch (error) {
     console.error('Error fetching data:', error);
     res.status(500).send('Internal Server Error');

@@ -9,7 +9,7 @@ const char* ssid = "iPhone de Lucas";
 const char* password = "draisine";
 
 // Replace with the IP address and port of your TCP server
-const char* serverIP = "172.0.0.1";  // Server IP Address
+const char* serverIP = "172.20.10.2";  // Server IP Address
 const uint16_t serverPort = 8080;        // Server port
 
 WiFiClient client;
@@ -24,6 +24,8 @@ void setup() {
   Serial.println("Connecting to WiFi...");
   WiFi.begin(ssid, password);
 
+  WiFi.setSleep(false);
+
   // Wait until connected
   while (WiFi.status() != WL_CONNECTED) {
     delay(1000);
@@ -33,7 +35,7 @@ void setup() {
   Serial.println("\nWiFi connected.");
   Serial.print("IP Address: ");
   Serial.println(WiFi.localIP());
-
+    
   // Attempt to connect to the server
   Serial.println("Connecting to server...");
   if (client.connect(serverIP, serverPort)) {
@@ -44,11 +46,26 @@ void setup() {
       String response = client.readString();
       Serial.println("Response from server: " + response);
     }
-    
-    Serial.println("Connection closed.");
   } else {
     Serial.println("Connection to server failed.");
   }
+}
+
+String readLine() {
+  char buffer[1024];
+  memset(buffer,0,1024);    // reset buffer
+  int index = 0; 
+  char c;  
+  while(true) {
+    while (!client.available()) {} // wait for smthg to read
+    while ((index < 1023) && (client.available())) {
+      c = client.read();
+      if (c == '\n') return String(buffer); // end-of-line reached => return
+      buffer[index++] = c; // store the char
+    }
+    // prevent buffer overflow: return the whole buffer even if no \n encountered
+    if (index == 1023) return String(buffer); 
+  }  
 }
 
 void loop() {
@@ -68,5 +85,18 @@ void loop() {
 
   String dataString = String(t) +","+ String(h);
   
+  if (!client.connected()) {
+    Serial.println("Reconnecting to server...");
+    if (client.connect(serverIP, serverPort)) {
+      Serial.println("Reconnected to server.");
+    } else {
+      Serial.println("Reconnection to server failed.");
+      return;
+    }
+  }
+
+  Serial.println("sending data: "+ dataString);
+
   client.print(dataString);
+  Serial.println(readLine());
 }

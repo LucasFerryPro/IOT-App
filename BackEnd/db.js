@@ -48,10 +48,6 @@ async function fetchData() {
       timestamps.push(record.timestamp);
     });
     
-    console.log('Temperature Data:', temperatureData);
-    console.log('Humidity Data:', humidityData);
-    console.log('Timestamps:', timestamps);
-    
     return { temperatureData, humidityData, timestamps };
     
   } catch (error) {
