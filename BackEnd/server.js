@@ -2,7 +2,7 @@
 const express = require('express'); 
 const net = require('net');
 const WebSocket = require('ws');
-const { sequelize, DhtData, fetchData } = require('./db'); // Import from db.js
+const { sequelize, DhtData,NanoData, fetchData,fetchNanoData } = require('./db'); // Import from db.js
 const cors = require('cors');
 
 // Create Express application
@@ -90,7 +90,6 @@ app.get('/api/data', async (req, res) => {
     res.status(500).send('Internal Server Error');
   }
 });
-
 app.use(express.json()); // For parsing application/json
 
 app.post('/api/nano_data', async (req, res) => {
@@ -99,7 +98,14 @@ app.post('/api/nano_data', async (req, res) => {
     console.log('Received Data:', req.body); 
 
     // Extract accelerometer data from the request
-    const { x, y, z } = req.body;
+    const { b_x, b_y, b_z } = req.body;
+
+    const newNanoData = await NanoData.create({
+      x: b_x,
+      y: b_y,
+      z: b_z,
+      timestamp: new Date()
+    }); 
 
     // Process the data (e.g., store it, log it, etc.)
     console.log(`Accelerometer Data - X: ${x}, Y: ${y}, Z: ${z}`);
@@ -110,4 +116,14 @@ app.post('/api/nano_data', async (req, res) => {
     console.error('Error processing data:', error);
     res.status(500).send('Internal Server Error');
   }
+
 });
+app.get('/api/nano_data', async (req, res) => {
+    try {
+      const data = await fetchNanoData(); // Call fetchData from db.js
+      res.json(data);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      res.status(500).send('Internal Server Error');
+    }
+  });
