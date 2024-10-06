@@ -90,3 +90,24 @@ app.get('/api/data', async (req, res) => {
     res.status(500).send('Internal Server Error');
   }
 });
+
+app.use(express.json()); // For parsing application/json
+
+app.post('/api/nano_data', async (req, res) => {
+  try {
+    // Log received data
+    console.log('Received Data:', req.body); 
+
+    // Extract accelerometer data from the request
+    const { x, y, z } = req.body;
+
+    // Process the data (e.g., store it, log it, etc.)
+    console.log(`Accelerometer Data - X: ${x}, Y: ${y}, Z: ${z}`);
+
+    // Respond to the Arduino Nano
+    res.status(200).send(`Data received: X = ${x}, Y = ${y}, Z = ${z}`);
+  } catch (error) {
+    console.error('Error processing data:', error);
+    res.status(500).send('Internal Server Error');
+  }
+});
