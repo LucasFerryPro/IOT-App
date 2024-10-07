@@ -98,17 +98,16 @@ app.post('/api/nano_data', async (req, res) => {
     console.log('Received Data:', req.body); 
 
     // Extract accelerometer data from the request
-    const { b_x, b_y, b_z } = req.body;
+    const { x, y, z } = req.body;
+
+    console.log(`Accelerometer Data - X: ${x}, Y: ${y}, Z: ${z}`);
 
     const newNanoData = await NanoData.create({
-      x: b_x,
-      y: b_y,
-      z: b_z,
+      x: x,
+      y: y,
+      z: z,
       timestamp: new Date()
     }); 
-
-    // Process the data (e.g., store it, log it, etc.)
-    console.log(`Accelerometer Data - X: ${x}, Y: ${y}, Z: ${z}`);
 
     // Respond to the Arduino Nano
     res.status(200).send(`Data received: X = ${x}, Y = ${y}, Z = ${z}`);
