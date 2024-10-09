@@ -52,7 +52,9 @@ function updateNanoPlot() {
 
     const layout = {
         title: 'Real-Time Accelerometer Data',
-        xaxis: { title: 'Timestamp' },
+        xaxis: { title: 'Timestamp' ,
+            automargin: true
+        },
         yaxis: { title: 'Acceleration Value' }
     };
 
