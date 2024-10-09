@@ -63,21 +63,17 @@ sequelize.sync();
 // Function to fetch data and populate the arrays
 async function fetchData() {
   try {
-    const data = await DhtData.findAll(); // Fetch all records from the database
+    const datas = await DhtData.findAll(); // Fetch all records from the database
     
-    // Initialize empty arrays
-    const temperatureData = [];
-    const humidityData = [];
-    const timestamps = [];
-    
-    // Loop through the data and populate the arrays
-    data.forEach(record => {
-      temperatureData.push(record.temperature);
-      humidityData.push(record.humidity);
-      timestamps.push(record.timestamp);
+    const apiDatas = datas.map(record => {
+      return {
+        temperature:record.temperature,
+        humidity:record.humidity,
+        timestamp:record.timestamp
+      }
     });
     
-    return { temperatureData, humidityData, timestamps };
+    return { data:apiDatas };
     
   } catch (error) {
     console.error('Error fetching data:', error);
