@@ -50,7 +50,7 @@ function updatePlot() {
         }
     };
 
-    Plotly.newPlot('chart', data, layout);
+    Plotly.newPlot('chart1', data, layout);
 }
 
 // WebSocket connection
