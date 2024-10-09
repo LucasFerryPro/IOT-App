@@ -82,23 +82,18 @@ async function fetchData() {
 //Fetch accelerometer data
 async function fetchNanoData() {
   try {
-    const data = await NanoData.findAll(); // Fetch all records from the database
+    const datas = await NanoData.findAll(); // Fetch all records from the database
     
-    // Initialize empty arrays
-    const xData = [];
-    const yData=[];
-    const zData=[];
-   const timestamps = [];
-    
-    // Loop through the data and populate the arrays
-    data.forEach(record => {
-      xData.push(record.x);
-      yData.push(record.y);
-      zData.push(record.z);
-      timestamps.push(record.timestamp);
+    const apiDatas = datas.map(record => {
+      return {
+        x:record.x,
+        y:record.y,
+        z:record.z,
+        timestamp:record.timestamp
+      }
     });
     
-    return { xData,yData,zData, timestamps };
+    return { data:apiDatas };
     
   } catch (error) {
     console.error('Error fetching nanoData :', error);

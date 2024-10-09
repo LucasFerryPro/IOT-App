@@ -42,7 +42,7 @@ function updatePlot() {
     const layout = {
         title: 'Real-Time Temperature and Humidity Data',
         xaxis: {
-            title: 'Timestamp'
+            title: 'Timestamp',
         },
         yaxis: {
             title: 'Value',
