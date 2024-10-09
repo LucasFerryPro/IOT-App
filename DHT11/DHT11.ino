@@ -4,11 +4,9 @@
 #define DHTPIN 18
 #define DHTTYPE DHT11
 
-// Replace with your network credentials
-const char* ssid = "iPhone de Lucas";
-const char* password = "draisine";
+const char* ssid = "";
+const char* password = "";
 
-// Replace with the IP address and port of your TCP server
 const char* serverIP = "172.20.10.2";  // Server IP Address
 const uint16_t serverPort = 8080;        // Server port
 

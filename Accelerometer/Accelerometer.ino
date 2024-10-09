@@ -3,8 +3,8 @@
 #include <Arduino_LSM6DS3.h>
 
 // WiFi credentials
-char ssid[] = "iPhone de Lucas";     // your network SSID (name)
-char pass[] = "draisine";    // your network password
+char ssid[] = "";     // your network SSID (name)
+char pass[] = "";    // your network password
 
 // Server details
 char serverAddress[] = "172.20.10.2";  // Server IP or domain
