@@ -5,19 +5,16 @@ const timestamps = [];
 async function initializeData() {
     const response = await fetch('http://localhost:3030/api/data'); // Match your server's port
     if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
+        throw new Error(`HTTP error! Status:     ${response.status}`);
     }
+
+    const { data: datas } = await response.json(); // Destructure the 'data' array from the JSON response
     
-    const data = await response.json(); // Get the JSON response
-
-    // Ensure that the data properties are being accessed correctly
-    const { temperatureData: fetchedTemperatureData, humidityData: fetchedHumidityData, timestamps: fetchedTimestamps } = data;
-
-    // Assign the fetched data
-    fetchedTemperatureData.forEach((temp, index) => {
-        temperatureData.push(temp);
-        humidityData.push(fetchedHumidityData[index]); // Corrected variable name here
-        timestamps.push(new Date(fetchedTimestamps[index]).toLocaleString()); // Corrected variable name here
+    // Loop through the data and populate the arrays
+    datas.forEach(record => {
+        temperatureData.push(record.temperature);
+        humidityData.push(record.humidity);
+        timestamps.push(new Date (record.timestamp).toLocaleString());
     });
 
     updatePlot();
