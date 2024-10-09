@@ -11,6 +11,25 @@ const port = 3030;
 
 // Enable CORS for API endpoints
 app.use(cors());
+app.use(express.json());
+
+// Define routes to serve individual HTML files
+
+app.use(express.static('../frontend'));
+
+// Define routes to serve individual HTML files from 'frontend' directory
+app.get('/', (req, res) => {
+  res.sendFile("../frontend/index.html");
+});
+
+app.get('/DHT.html', (req, res) => {
+  res.sendFile('../frontend/DTH.html');
+});
+
+app.get('/nano.html', (req, res) => {
+  res.sendFile('../frontend/nano.html');
+});
+
 
 // Start the Express server
 app.listen(port, () => {
