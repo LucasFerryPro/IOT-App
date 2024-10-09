@@ -1,12 +1,10 @@
 const { Sequelize, DataTypes } = require('sequelize');
 
-// Create a new SQLite database connection
 const sequelize = new Sequelize({
   dialect: 'sqlite',
-  storage: './database.sqlite' // You can change this to any other supported DB
+  storage: './database.sqlite'
 });
 
-// Define a simple DhtData model
 const DhtData = sequelize.define('DhtData', {
   id: {
     type: DataTypes.INTEGER,
@@ -28,10 +26,6 @@ const DhtData = sequelize.define('DhtData', {
   }
 });
 
-
-//database for data from accelerometer 
-
-// Define a simple DhtData model
 const NanoData = sequelize.define('NanoData', {
   id: {
     type: DataTypes.INTEGER,
@@ -57,10 +51,8 @@ const NanoData = sequelize.define('NanoData', {
   }
 });
 
-// Sync the database schema
 sequelize.sync();
 
-// Function to fetch data and populate the arrays
 async function fetchData() {
   try {
     const datas = await DhtData.findAll(); // Fetch all records from the database
@@ -79,7 +71,7 @@ async function fetchData() {
     console.error('Error fetching data:', error);
   }
 }
-//Fetch accelerometer data
+
 async function fetchNanoData() {
   try {
     const datas = await NanoData.findAll(); // Fetch all records from the database

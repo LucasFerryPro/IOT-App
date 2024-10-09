@@ -5,19 +5,14 @@ const WebSocket = require('ws');
 const { sequelize, DhtData,NanoData, fetchData,fetchNanoData } = require('./db'); // Import from db.js
 const cors = require('cors');
 
-// Create Express application
 const app = express();
 const port = 3030;
 
-// Enable CORS for API endpoints
 app.use(cors());
 app.use(express.json());
 
-// Define routes to serve individual HTML files
-
 app.use(express.static('../frontend'));
 
-// Define routes to serve individual HTML files from 'frontend' directory
 app.get('/', (req, res) => {
   res.sendFile("../frontend/index.html");
 });
@@ -30,8 +25,7 @@ app.get('/nano.html', (req, res) => {
   res.sendFile('../frontend/nano.html');
 });
 
-
-// Start the Express server
+// Express server
 app.listen(port, () => {
   console.log(`Express server listening on port ${port}`);
 });
@@ -109,14 +103,12 @@ app.get('/api/data', async (req, res) => {
     res.status(500).send('Internal Server Error');
   }
 });
-app.use(express.json()); // For parsing application/json
+app.use(express.json());
 
 app.post('/api/nano_data', async (req, res) => {
   try {
-    // Log received data
     console.log('Received Data:', req.body); 
 
-    // Extract accelerometer data from the request
     const { x, y, z } = req.body;
 
     console.log(`Accelerometer Data - X: ${x}, Y: ${y}, Z: ${z}`);
@@ -128,7 +120,6 @@ app.post('/api/nano_data', async (req, res) => {
       timestamp: new Date()
     }); 
 
-    // Respond to the Arduino Nano
     res.status(200).send(`Data received: X = ${x}, Y = ${y}, Z = ${z}`);
   } catch (error) {
     console.error('Error processing data:', error);
@@ -138,7 +129,7 @@ app.post('/api/nano_data', async (req, res) => {
 });
 app.get('/api/nano_data', async (req, res) => {
     try {
-      const data = await fetchNanoData(); // Call fetchData from db.js
+      const data = await fetchNanoData();
       res.json(data);
     } catch (error) {
       console.error('Error fetching data:', error);

@@ -2,48 +2,46 @@
     width: 100%;
     height: 100vh;
 }
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(to right, #ece9e6, #ffffff); /* Light gradient background */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
 
-        /* Add custom styles here */
-        body {
-            font-family: 'Arial', sans-serif;
-            background: linear-gradient(to right, #ece9e6, #ffffff); /* Light gradient background */
-            margin: 0;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-        }
+h1 {
+    color: #333;
+    margin: 20px;
+}
 
-        h1 {
-            color: #333;
-            margin: 20px;
-        }
 
-    
-        .nav-links {
-            display: flex;
-            justify-content: center; /* Centers links horizontally */
-            align-items: center; /* Centers links vertically */
-            gap: 20px; /* Space between links */
-            margin-top: 40px; /* Space between header and links */
-        }
+.nav-links {
+    display: flex;
+    justify-content: center; /* Centers links horizontally */
+    align-items: center; /* Centers links vertically */
+    gap: 20px; /* Space between links */
+    margin-top: 40px; /* Space between header and links */
+}
 
-        .nav-links a {
-            text-decoration: none;
-            color: white;
-            background-color: #007BFF;
-            padding: 12px 20px;
-            border-radius: 5px;
-            margin: 0 10px;
-            transition: background-color 0.3s;
-            font-size: 1.1em;
-            box-shadow: 0 2px 4px rgba(0, 123, 255, 0.4);
-        }
+.nav-links a {
+    text-decoration: none;
+    color: white;
+    background-color: #007BFF;
+    padding: 12px 20px;
+    border-radius: 5px;
+    margin: 0 10px;
+    transition: background-color 0.3s;
+    font-size: 1.1em;
+    box-shadow: 0 2px 4px rgba(0, 123, 255, 0.4);
+}
 
-        .nav-links a:hover {
-            background-color: #0056b3;
-            box-shadow: 0 4px 8px rgba(0, 123, 255, 0.5);
-        }
-        
+.nav-links a:hover {
+    background-color: #0056b3;
+    box-shadow: 0 4px 8px rgba(0, 123, 255, 0.5);
+}
+

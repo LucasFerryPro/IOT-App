@@ -3,14 +3,13 @@ const humidityData = [];
 const timestamps = [];
 
 async function initializeData() {
-    const response = await fetch('http://localhost:3030/api/data'); // Match your server's port
+    const response = await fetch('http://localhost:3030/api/data');
     if (!response.ok) {
         throw new Error(`HTTP error! Status:     ${response.status}`);
     }
 
-    const { data: datas } = await response.json(); // Destructure the 'data' array from the JSON response
+    const { data: datas } = await response.json();
     
-    // Loop through the data and populate the arrays
     datas.forEach(record => {
         temperatureData.push(record.temperature);
         humidityData.push(record.humidity);

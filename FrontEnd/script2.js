@@ -9,9 +9,8 @@ async function initializeNanoData() {
         throw new Error(`HTTP error! Status: ${response.status}`);
     }
 
-    const { data: datas } = await response.json(); // Destructure the 'data' array from the JSON response
+    const { data: datas } = await response.json();
     
-    // Loop through the data and populate the arrays
     datas.forEach(record => {
         xData.push(record.x);
         yData.push(record.y);
