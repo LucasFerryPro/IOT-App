@@ -43,6 +43,7 @@ function updatePlot() {
         title: 'Real-Time Temperature and Humidity Data',
         xaxis: {
             title: 'Timestamp',
+            automargin: true,
         },
         yaxis: {
             title: 'Value',
