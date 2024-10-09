@@ -3,8 +3,8 @@
 #include <Arduino_LSM6DS3.h>
 
 // WiFi credentials
-char ssid[] = "";     // your network SSID (name)
-char pass[] = "";    // your network password
+char ssid[] = "iPhone de Lucas";     // your network SSID (name)
+char pass[] = "draisine";    // your network password
 
 // Server details
 char serverAddress[] = "172.20.10.2";  // Server IP or domain
@@ -14,8 +14,7 @@ WiFiClient wifi;
 HttpClient client = HttpClient(wifi, serverAddress, port);
 
 void setup() {
-  Serial.begin(9600);
-  while (!Serial);
+  Serial.begin(115200);
 
   // Connect to WiFi
   while (WiFi.begin(ssid, pass) != WL_CONNECTED) {

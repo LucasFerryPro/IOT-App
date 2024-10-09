@@ -120,6 +120,18 @@ app.post('/api/nano_data', async (req, res) => {
       timestamp: new Date()
     }); 
 
+    // Broadcast the new accelerometer data to all WebSocket clients
+    wss.clients.forEach(client => {
+      if (client.readyState === WebSocket.OPEN) {
+        client.send(JSON.stringify({
+          x: newNanoData.x,
+          y: newNanoData.y,
+          z: newNanoData.z,
+          timestamp: newNanoData.timestamp
+        }));
+      }
+    });
+
     res.status(200).send(`Data received: X = ${x}, Y = ${y}, Z = ${z}`);
   } catch (error) {
     console.error('Error processing data:', error);

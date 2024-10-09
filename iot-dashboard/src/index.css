@@ -1,0 +1,22 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(to right, #ece9e6, #ffffff);
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.App {
+    display: flex;
+    flex-direction: column;
+    width: 100%; /* Prend toute la largeur */
+    height: 100vh; /* Prend toute la hauteur */
+}
+
+.chart-container {
+    flex-grow: 1; /* Permet au conteneur de s'étendre */
+    width: 100%; /* Prend toute la largeur */
+    height: calc(100vh - 80px); /* Ajuste la hauteur en fonction de la navbar */
+    padding: 20px;
+}
