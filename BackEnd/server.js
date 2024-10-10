@@ -11,19 +11,6 @@ const port = 3030;
 app.use(cors());
 app.use(express.json());
 
-app.use(express.static('../frontend'));
-
-app.get('/', (req, res) => {
-  res.sendFile("../frontend/index.html");
-});
-
-app.get('/DHT.html', (req, res) => {
-  res.sendFile('../frontend/DTH.html');
-});
-
-app.get('/nano.html', (req, res) => {
-  res.sendFile('../frontend/nano.html');
-});
 
 // Express server
 app.listen(port, () => {
